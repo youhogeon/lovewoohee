@@ -17,6 +17,8 @@ import Typography from '@mui/material/Typography'
 const Home = () => {
     const imageBox = useRef<HTMLDivElement>(null)
 
+    const boxRef = useRef<HTMLDivElement>(null)
+
     const [selectedFrame, setSelectedFrame] = useState<string>()
     const [error, setError] = useState<string | null>(null)
     const [selectedVideoSource, setSelectedVideoSource] = useState<number>(0)
@@ -61,6 +63,10 @@ const Home = () => {
             link.href = canvas.toDataURL('image/png')
             link.download = 'my_photo.png'
             link.click()
+
+            if (boxRef.current === null) return
+            boxRef.current.style.display = 'block'
+            boxRef.current.getElementsByTagName('img')[0].src = link.href
         })
     }, [])
 
@@ -175,9 +181,13 @@ const Home = () => {
                             }
                         </Box>
 
-                        <Button variant="contained" sx={{ width: '100%' }} onClick={handleClickSave} disabled={videoCapturedCount != 4}>사진 저장</Button>
-                    </>
+                        <Button variant="contained" sx={{ width: '100%' }} onClick={handleClickSave} disabled={videoCapturedCount != 4} >사진 만들기</Button>
 
+                        <Box ref={boxRef} sx={{ display: 'none', textAlign: 'center' }}>
+                            ▼ 꾹 눌러서 저장하세요
+                            <img src="" />
+                        </Box>
+                    </>
                 )
             }
         </>

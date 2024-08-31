@@ -119,7 +119,7 @@ export const VideoCam = (props: VideoCamProps) => {
             }
         }
 
-        delayCaptureCanvas(5)
+        delayCaptureCanvas(1)
     }, [showCanvas, counter])
 
 
