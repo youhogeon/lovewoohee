@@ -133,12 +133,36 @@ export const VideoCam = (props: VideoCamProps) => {
 
         if (ctx === null) return
 
-        _canvas.width = _video.videoWidth
-        _canvas.height = _video.videoHeight
+        const videoWidth = _video.videoWidth
+        const videoHeight = _video.videoHeight
 
-        ctx.scale(-1, 1)
-        ctx.translate(-_video.videoWidth, 0)
-        ctx.drawImage(_video, 0, 0, _video.videoWidth, _video.videoHeight)
+        const canvasWidth = _canvas.width
+        const canvasHeight = _canvas.height
+
+        const videoAspect = videoWidth / videoHeight
+        const canvasAspect = canvasWidth / canvasHeight
+
+        let sx, sy, sWidth, sHeight
+
+        if (videoAspect > canvasAspect) {
+          // 비디오가 더 넓은 경우
+          sWidth = videoHeight * canvasAspect
+          sHeight = videoHeight
+          sx = (videoWidth - sWidth) / 2
+          sy = 0
+        } else {
+          // 비디오가 더 높은 경우
+          sWidth = videoWidth
+          sHeight = videoWidth / canvasAspect
+          sx = 0
+          sy = (videoHeight - sHeight) / 2
+        }
+
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+        ctx.scale(-1, 1) // 좌우 반전
+
+        // 반전된 상태에서 캔버스에 그리기, 좌표를 캔버스 넓이만큼 이동
+        ctx.drawImage(_video, sx, sy, sWidth, sHeight, -canvasWidth, 0, canvasWidth, canvasHeight)
 
 
         setShowCanvas(true)
@@ -185,10 +209,11 @@ export const VideoCam = (props: VideoCamProps) => {
 
             <canvas
                 ref={canvas}
+                width="306"
+                height="245"
                 style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
                     display: showCanvas ? 'block' : 'none'
                 }}
             />
