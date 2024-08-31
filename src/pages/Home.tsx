@@ -185,7 +185,7 @@ const Home = () => {
 
                         <Box ref={boxRef} sx={{ display: 'none', textAlign: 'center' }}>
                             ▼ 꾹 눌러서 저장하세요
-                            <img src="" />
+                            <img src="" style={{ width: '100%' }} />
                         </Box>
                     </>
                 )
