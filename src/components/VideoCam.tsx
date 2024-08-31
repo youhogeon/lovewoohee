@@ -188,6 +188,7 @@ export const VideoCam = (props: VideoCamProps) => {
                 style={{
                     width: '100%',
                     height: '100%',
+                    objectFit: 'cover',
                     display: showCanvas ? 'block' : 'none'
                 }}
             />
