@@ -119,7 +119,7 @@ export const VideoCam = (props: VideoCamProps) => {
             }
         }
 
-        delayCaptureCanvas(1)
+        delayCaptureCanvas(5)
     }, [showCanvas, counter])
 
 
@@ -139,6 +139,7 @@ export const VideoCam = (props: VideoCamProps) => {
         ctx.scale(-1, 1)
         ctx.translate(-_video.videoWidth, 0)
         ctx.drawImage(_video, 0, 0, _video.videoWidth, _video.videoHeight)
+
 
         setShowCanvas(true)
     }, [])
@@ -182,6 +183,15 @@ export const VideoCam = (props: VideoCamProps) => {
                 )
             }
 
+            <canvas
+                ref={canvas}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    display: showCanvas ? 'block' : 'none'
+                }}
+            />
+
             <video
                 style={{
                     width: '100%',
@@ -193,16 +203,6 @@ export const VideoCam = (props: VideoCamProps) => {
                 ref={video}
                 autoPlay
                 playsInline
-            />
-
-            <canvas
-                ref={canvas}
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: showCanvas ? 'block' : 'none'
-                }}
             />
         </Box>
     )
